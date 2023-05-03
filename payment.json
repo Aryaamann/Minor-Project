@@ -1,0 +1,88 @@
+{
+  "name": "google-pay-button",
+  "version": "3.0.9",
+  "lockfileVersion": 2,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "google-pay-button",
+      "version": "3.0.9",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@types/googlepay": "^0.7.0"
+      },
+      "node_modules/@ampproject/remapping": {
+      "version": "2.2.0",
+      "resolved": "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz",
+      "integrity": "sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w==",
+      "dev": true,
+      "dependencies": {
+        "@jridgewell/gen-mapping": "^0.1.0",
+        "@jridgewell/trace-mapping": "^0.3.9"
+      }
+<script async
+   src="https://pay.google.com/gp/p/js/payment.json"
+    onload="onGooglePayLoaded()">
+</script>
+
+function onGooglePayLoaded() {
+  const googlePayClient= new google.payments.api.PaymentsClient( { environment:'TEST' } );
+}
+isReadytoPay()
+{ 
+  const clientConfiguration = {
+      apiVersion:2,
+      apiVersionMinor: 0,
+      allowedPaymentMethods: [cardPaymentMethod] };
+
+googlePayClient.isReadyToPay(clientConfiguration).then(function(response) {
+  if(response.result){
+    //will add google pay button
+  }
+}).catch(function(err){
+  //log error for developer controls
+  
+});
+
+googlePayClient.createButton({
+  //default to black if omitted
+  buttonColor:'default',
+  //defaults to long if omitted
+  buttonType:'long',
+  onClick: onGooglePaymentsButtonClicked
+});
+
+const paymentDataRequest = Object.assign({}, clientConfiguration);
+paymentDataRequest.transactionInfo={
+  totalPriceStatus: 'FINAL',
+  totalPrice:'123.45',
+  currencyCode:'USD',
+};
+paymentDataRequest.customerinfo ={
+  customerId:'xyz',
+  cutomername:'Aryaman'
+};
+const tokenizationSpec={
+  type:'Payment-Gateway',
+  parameters:{
+    gateway:'example',
+    gatewayCustomerId: 'gatewayCustomerId'
+  }
+};
+
+googlePayClient.loadPaymentData(paymentDataRequest)
+.then(function(paymentData) {
+processPayment (paymentData); 
+})
+.catch(function(err) {// log error in developer console
+});
+
+
+
+
+
+  
+  
+  
+  
+
